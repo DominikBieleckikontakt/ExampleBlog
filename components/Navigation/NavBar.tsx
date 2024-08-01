@@ -8,7 +8,6 @@ import { iconsData, navLinks } from "@/constants";
 
 const NavBar = () => {
   const pathname = usePathname();
-  console.log(pathname);
 
   return (
     <div className="flex md:justify-between p-8 md:px-24">
