@@ -1,9 +1,9 @@
-import Header from "@/components/Header";
+import ArticlesList from "@/components/ArticlesList";
 
 export default function Home() {
   return (
     <main className="">
-      <Header />
+      <ArticlesList />
     </main>
   );
 }
