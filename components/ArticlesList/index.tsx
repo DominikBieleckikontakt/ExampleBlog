@@ -15,18 +15,18 @@ const ArticlesList = () => {
           <li key={id}>
             <Link
               href={`/articles/${id}`}
-              className="flex gap-5 duration-300 rounded-lg hover:bg-secondary hover:shadow-md"
+              className="flex max-md:flex-col max-md:items-center gap-5 duration-300 rounded-lg hover:bg-secondary hover:shadow-md"
             >
               {image && (
                 <Image
                   src={image}
                   alt={title}
-                  width={200}
-                  height={200}
-                  className="rounded-l-lg"
+                  width={250}
+                  height={250}
+                  className="md:rounded-l-lg max-md:mt-2"
                 />
               )}
-              <div className="py-5">
+              <div className="py-5 pr-3 max-md:px-2">
                 <ul className="flex gap-3">
                   {categories.map((item, index) => (
                     <li key={index} className="text-sm font-light">
@@ -34,7 +34,7 @@ const ArticlesList = () => {
                     </li>
                   ))}
                 </ul>
-                <h2 className="text-xl font-semibold mt-4">{title}</h2>
+                <h2 className="text-xl font-semibold mt-2">{title}</h2>
                 <p className="font-light text-sm italic">{date}</p>
                 <p className="my-5 line-clamp-[10]">{snippet}</p>
               </div>
