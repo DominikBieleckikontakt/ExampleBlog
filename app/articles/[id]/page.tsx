@@ -1,6 +1,8 @@
-import { getAllPostIds, getPostData } from "@/lib/utils";
-import { MarkdownDataType } from "@/types";
 import Image from "next/image";
+
+import { getAllPostIds, getPostData } from "@/lib/server-utils";
+import { MarkdownDataType } from "@/types";
+import Comments from "@/components/Article/Comments";
 
 export async function generateStaticParams() {
   const paths = getAllPostIds();
@@ -21,6 +23,7 @@ export const PostPage = async ({ params }: { params: { id: string } }) => {
         className="mx-auto mb-10"
       />
       <article dangerouslySetInnerHTML={{ __html: postData.contentHtml }} />
+      <Comments postId={postData.id} />
     </div>
   );
 };

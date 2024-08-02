@@ -1,4 +1,4 @@
-import { getSortedPostsData } from "@/lib/utils";
+import { getSortedPostsData } from "@/lib/server-utils";
 import { MarkdownDataType } from "@/types";
 import Image from "next/image";
 import Link from "next/link";

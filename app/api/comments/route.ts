@@ -1,13 +1,27 @@
-// MONGODB CONNECTION STRING: mongodb+srv://pstrollyt:AvtlrLzjI4y3df2G@cluster0.lkbekdp.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
-
 import { NextResponse } from "next/server";
+
+import Comment from "@/models/Comment";
+import { randomUUID } from "crypto";
+import { dbConnect } from "@/lib/server-utils";
 
 export const POST = async (req: Request) => {
   try {
-    const body = req.json();
+    const { name, content, postId } = await req.json();
+
+    const commentData = {
+      id: randomUUID(),
+      author: name,
+      content,
+      createdAt: Date(),
+      likes: 0,
+      postId,
+    };
+
+    await dbConnect();
+    const comment = await Comment.create(commentData);
 
     return NextResponse.json(
-      { message: "Everything went well!" },
+      { message: "Everything went well!", comment },
       { status: 200 }
     );
   } catch (err) {
@@ -17,3 +31,8 @@ export const POST = async (req: Request) => {
     );
   }
 };
+
+export async function GET(req: Request) {
+  console.log("sth");
+  return NextResponse.json({ message: "dsa" }, { status: 200 });
+}
