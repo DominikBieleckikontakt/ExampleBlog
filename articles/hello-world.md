@@ -34,4 +34,4 @@ Happy reading!
 ---
 
 \
-Thank you for visiting my blog. Your support means the world to me!
+Thank you for visiting my blog. Your support means a lot to me!

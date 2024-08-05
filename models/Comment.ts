@@ -12,7 +12,6 @@ export interface Comment extends mongoose.Document {
     author: string;
     content: string;
     createdAt: Date;
-    likes: number;
   }[];
 }
 
@@ -41,31 +40,14 @@ const CommentSchema = new mongoose.Schema<Comment>({
     type: String,
     required: true,
   },
-  answers: {
-    type: {
-      id: {
-        type: String,
-        required: true,
-      },
-      author: {
-        type: String,
-        required: true,
-      },
-      content: {
-        type: String,
-        required: true,
-      },
-      createdAt: {
-        type: Date,
-        required: true,
-      },
-      likes: {
-        type: Number,
-        required: true,
-      },
+  answers: [
+    {
+      id: String,
+      author: String,
+      content: String,
+      createdAt: Date,
     },
-    required: false,
-  },
+  ],
 });
 
 export default mongoose.models.Comment ||

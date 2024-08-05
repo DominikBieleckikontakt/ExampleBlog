@@ -1,15 +1,14 @@
 import { NextResponse } from "next/server";
 
-import Comment from "@/models/Comment";
-import { randomUUID } from "crypto";
+import Comment, { Comment as CommentType } from "@/models/Comment";
 import { dbConnect } from "@/lib/server-utils";
 
 export const POST = async (req: Request) => {
   try {
-    const { name, content, postId } = await req.json();
+    const { id, name, content, postId } = await req.json();
 
     const commentData = {
-      id: randomUUID(),
+      id,
       author: name,
       content,
       createdAt: Date(),
@@ -33,6 +32,25 @@ export const POST = async (req: Request) => {
 };
 
 export async function GET(req: Request) {
-  console.log("sth");
-  return NextResponse.json({ message: "dsa" }, { status: 200 });
+  try {
+    const url = new URL(req.url);
+    const searchParams = new URLSearchParams(url.searchParams);
+    const postId = searchParams.get("postId")!;
+
+    await dbConnect();
+    const comments: CommentType[] = await Comment.find({
+      postId,
+    });
+
+    return NextResponse.json(
+      { message: "Everything is OK", comments },
+      { status: 200 }
+    );
+  } catch (err) {
+    console.log(err);
+    return NextResponse.json(
+      { message: "Error occurred", error: err },
+      { status: 500 }
+    );
+  }
 }

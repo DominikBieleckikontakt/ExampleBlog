@@ -1,10 +1,27 @@
 "use client";
 import React, { useRef, useState } from "react";
+
 import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
+import { generateUUID } from "@/lib/utils";
 
-const ArticleForm = ({ postId }: { postId: string }) => {
+const ArticleForm = ({
+  postId,
+  onAddComment,
+  isAnswering,
+  commentId,
+}: {
+  postId?: string;
+  onAddComment: (comment: {
+    id: string;
+    name: string;
+    content: string;
+    postId?: string;
+  }) => void;
+  isAnswering?: boolean;
+  commentId?: string;
+}) => {
   const [error, setError] = useState("");
   const [nameValue, setNameValue] = useState("");
   const [contentValue, setContentValue] = useState("");
@@ -20,28 +37,38 @@ const ArticleForm = ({ postId }: { postId: string }) => {
     const name = nameRef.current?.value;
     const content = contentRef.current?.value;
 
+    const id = generateUUID();
+
     if (!name || name?.length < 1 || !content || content?.length < 1) {
       setError("Complete both inputs correctly.");
       setIsLoading(false);
     } else {
       setError("");
-      fetch("/api/comments", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name,
-          content,
-          postId,
-        }),
-      })
+      fetch(
+        `${
+          isAnswering
+            ? "/api/comments/answer?commentId=" + commentId
+            : "/api/comments"
+        } `,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id,
+            name,
+            content,
+            postId,
+          }),
+        }
+      )
         .then((res) => res.json())
         .then((data) => {
+          onAddComment({ id, name, content, postId });
           setNameValue("");
           setContentValue("");
           setIsLoading(false);
-          console.log(data);
         })
         .catch((err) => {
           throw new Error(err);
@@ -84,8 +111,10 @@ const ArticleForm = ({ postId }: { postId: string }) => {
         <Button type="submit" className="mt-3 w-36" disabled={isLoading}>
           {isLoading ? (
             <div className="size-5 border-2 border-secondary border-t-transparent animate-spin rounded-full" />
-          ) : (
+          ) : !isAnswering ? (
             "Post a comment"
+          ) : (
+            "Post an answer"
           )}
         </Button>
       </div>
