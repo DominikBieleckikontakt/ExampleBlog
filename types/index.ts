@@ -18,3 +18,17 @@ export type MarkdownDataType = {
   contentHtml: string;
   image: string;
 };
+
+export type SimpleCommentType = {
+  id: string;
+  author: string;
+  content: string;
+  createdAt: string;
+  answers?: { id: string; author: string; content: string; createdAt: Date }[];
+};
+
+export type TempCommentType = {
+  id: string;
+  name: string;
+  content: string;
+};

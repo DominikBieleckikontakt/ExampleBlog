@@ -4,14 +4,7 @@ import React, { useState } from "react";
 import { Comment as CommentType } from "@/models/Comment";
 import ArticleForm from "./ArticleForm";
 import Comment from "./Comment";
-
-export type SimpleCommentType = {
-  id: string;
-  author: string;
-  content: string;
-  createdAt: string;
-  answers?: [];
-};
+import { SimpleCommentType, TempCommentType } from "@/types";
 
 const Comments = ({
   commentList,
@@ -24,20 +17,17 @@ const Comments = ({
     commentList
   );
 
-  const addCommentHandler = (comment: {
-    id: string;
-    name: string;
-    content: string;
-    postId?: string;
-  }) => {
-    const newComment = {
-      id: comment.id,
-      author: comment.name,
-      content: comment.content,
-      createdAt: Date(),
-    };
+  const addCommentHandler = (comment: TempCommentType) => {
     setComments((prev: any) => {
-      return [...prev, newComment];
+      return [
+        ...prev,
+        {
+          id: comment.id,
+          author: comment.name,
+          content: comment.content,
+          createdAt: Date(),
+        },
+      ];
     });
   };
 

@@ -5,6 +5,7 @@ import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { generateUUID } from "@/lib/utils";
+import { TempCommentType } from "@/types";
 
 const ArticleForm = ({
   postId,
@@ -13,12 +14,7 @@ const ArticleForm = ({
   commentId,
 }: {
   postId?: string;
-  onAddComment: (comment: {
-    id: string;
-    name: string;
-    content: string;
-    postId?: string;
-  }) => void;
+  onAddComment: (comment: TempCommentType) => void;
   isAnswering?: boolean;
   commentId?: string;
 }) => {
@@ -36,7 +32,6 @@ const ArticleForm = ({
 
     const name = nameRef.current?.value;
     const content = contentRef.current?.value;
-
     const id = generateUUID();
 
     if (!name || name?.length < 1 || !content || content?.length < 1) {
@@ -64,8 +59,8 @@ const ArticleForm = ({
         }
       )
         .then((res) => res.json())
-        .then((data) => {
-          onAddComment({ id, name, content, postId });
+        .then(() => {
+          onAddComment({ id, name, content });
           setNameValue("");
           setContentValue("");
           setIsLoading(false);

@@ -26,7 +26,7 @@ export const PostPage = async ({ params }: { params: { id: string } }) => {
   const { comments } = await fetchComments(postData.id);
 
   return (
-    <div className="max-w-[45rem] mx-auto mb-24 prose">
+    <div className="max-w-[45rem] mx-auto mb-24 prose max-md:mx-5">
       <h1 className="text-center font-light  my-10">{postData.title}</h1>
       <Image
         alt={postData.title}

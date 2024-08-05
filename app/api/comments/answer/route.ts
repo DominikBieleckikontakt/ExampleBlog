@@ -5,15 +5,12 @@ import { NextResponse } from "next/server";
 
 export const POST = async (req: Request) => {
   try {
-    const { id, name, content } = await req.json();
+    const { name, content } = await req.json();
     const url = new URL(req.url);
     const searchParams = new URLSearchParams(url.searchParams);
     const commentId = searchParams.get("commentId")!;
 
     await dbConnect();
-    // const comment: CommentType = await Comment.find({
-    //   id: commentId,
-    // });
 
     const answerData = {
       id: generateUUID(),
@@ -22,10 +19,7 @@ export const POST = async (req: Request) => {
       createdAt: Date(),
     };
 
-    // answers.push(answerData);
-    // console.log(answers);
-
-    const allAnswers = await Comment.findOneAndUpdate(
+    await Comment.findOneAndUpdate(
       {
         id: commentId,
       },
@@ -40,7 +34,6 @@ export const POST = async (req: Request) => {
       { status: 200 }
     );
   } catch (err) {
-    console.log(err);
     return NextResponse.json(
       { message: "An error occurred!", err },
       { status: 500 }

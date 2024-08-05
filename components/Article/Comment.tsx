@@ -2,11 +2,8 @@
 import React, { useState } from "react";
 
 import { Comment as CommentType } from "@/models/Comment";
-import { SimpleCommentType } from "./Comments";
+import { SimpleCommentType, TempCommentType } from "@/types";
 import ArticleForm from "./ArticleForm";
-import { Accordion, AccordionItem, AccordionTrigger } from "../ui/accordion";
-import { AccordionContent } from "@radix-ui/react-accordion";
-import { Button } from "../ui/button";
 import Answer from "./Answer";
 
 const Comment = ({
@@ -17,19 +14,17 @@ const Comment = ({
   const [isAnswering, setIsAnswering] = useState(false);
   const [answersList, setAnswersList] = useState(answers || []);
 
-  const onAddAnswer = (comment: {
-    id: string;
-    name: string;
-    content: string;
-  }) => {
-    const newAnswer = {
-      id: comment.id,
-      author: comment.name,
-      content: comment.content,
-      createdAt: Date(),
-    };
+  const onAddAnswer = (comment: TempCommentType) => {
     setAnswersList((prev: any) => {
-      return [...prev, newAnswer];
+      return [
+        ...prev,
+        {
+          id: comment.id,
+          author: comment.name,
+          content: comment.content,
+          createdAt: Date(),
+        },
+      ];
     });
     setIsAnswering(false);
   };
@@ -60,18 +55,16 @@ const Comment = ({
       >
         Answer
       </button>
-      <div>
-        <div
-          className={`overflow-hidden transition-all duration-1000 ease-in-out ml-5 ${
-            isAnswering ? "max-h-[400px]" : "max-h-0"
-          }`}
-        >
-          <ArticleForm
-            onAddComment={onAddAnswer}
-            isAnswering={true}
-            commentId={id}
-          />
-        </div>
+      <div
+        className={`overflow-hidden transition-all duration-1000 ease-in-out ml-5 ${
+          isAnswering ? "max-h-[400px]" : "max-h-0"
+        }`}
+      >
+        <ArticleForm
+          onAddComment={onAddAnswer}
+          isAnswering={true}
+          commentId={id}
+        />
       </div>
       <div className="ml-5">
         {answersList &&

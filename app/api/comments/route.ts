@@ -12,7 +12,6 @@ export const POST = async (req: Request) => {
       author: name,
       content,
       createdAt: Date(),
-      likes: 0,
       postId,
     };
 

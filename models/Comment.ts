@@ -5,7 +5,6 @@ export interface Comment extends mongoose.Document {
   author: string;
   content: string;
   createdAt: Date;
-  likes: number;
   postId: string;
   answers?: {
     id: string;
@@ -30,10 +29,6 @@ const CommentSchema = new mongoose.Schema<Comment>({
   },
   createdAt: {
     type: Date,
-    required: true,
-  },
-  likes: {
-    type: Number,
     required: true,
   },
   postId: {
