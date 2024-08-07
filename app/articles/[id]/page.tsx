@@ -11,9 +11,12 @@ export async function generateStaticParams() {
 }
 
 const fetchComments = async (id: string) => {
-  const res = await fetch(`http://localhost:3000/api/comments?postId=${id}`, {
-    cache: "no-store",
-  });
+  const res = await fetch(
+    `https://dominikbieleckikontakt.github.io/ExampleBlog/api/comments?postId=${id}`,
+    {
+      cache: "no-store",
+    }
+  );
   const data: {
     message: string;
     comments: CommentType[];
