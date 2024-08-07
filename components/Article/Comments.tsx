@@ -13,12 +13,11 @@ const Comments = ({
   commentList: CommentType[];
   postId: string;
 }) => {
-  const [comments, setComments] = useState<SimpleCommentType[] | CommentType[]>(
-    commentList
-  );
+  const [comments, setComments] =
+    useState<(SimpleCommentType | CommentType)[]>(commentList);
 
   const addCommentHandler = (comment: TempCommentType) => {
-    setComments((prev: any) => {
+    setComments((prev) => {
       return [
         ...prev,
         {
