@@ -21,7 +21,7 @@ const fetchComments = async (id: string) => {
   return data;
 };
 
-export const PostPage = async ({ params }: { params: { id: string } }) => {
+const PostPage = async ({ params }: { params: { id: string } }) => {
   const postData: MarkdownDataType = await getPostData(params.id);
   const { comments } = await fetchComments(postData.id);
 
