@@ -15,8 +15,8 @@ MyExampleBlog is a modern, feature-rich blogging platform built using the latest
 1. **Clone the Repository**
 
    ```bash
-   git clone https://github.com/yourusername/myexampleblog.git
-   cd myexampleblog
+   git clone https://github.com/DominikBieleckikontakt/ExampleBlog.git
+   cd blog
    ```
 
 2. **Install Dependencies**
